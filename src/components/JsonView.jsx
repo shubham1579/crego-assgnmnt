@@ -1,10 +1,8 @@
-// JsonView.js
 import React from 'react';
 
-const JsonView = ({ expressions, combinator }) => {
-  console.log(expressions);
+const JsonView = ({ jsonExpressions }) => {
   const jsonData = {
-    rules: expressions.map((expression) => ({
+    rules: jsonExpressions[0].rules.map((expression) => ({
       key: expression.key,
       output: {
         value: expression.output.value,
@@ -12,11 +10,11 @@ const JsonView = ({ expressions, combinator }) => {
         score: expression.output.score,
       },
     })),
-    combinator,
+    combinator: jsonExpressions[0].combinator,
   };
 
   return (
-    <div className="mt-5 bg-black text-white p-4">
+    <div className="mt-5 bg-black text-white p-4 shadow-sm rounded">
       <h2>JSON View</h2>
       <pre>{JSON.stringify(jsonData, null, 2)}</pre>
     </div>

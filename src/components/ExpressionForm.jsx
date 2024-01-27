@@ -1,12 +1,9 @@
-// ExpressionForm.js
 import React, { useState } from 'react';
 import Expression from './Expression';
 import JsonView from './JsonView';
 import ExpressionList from './ExpressionList';
 
-// Inside ExpressionForm.js
 const ExpressionForm = () => {
-  const [expressions, setExpressions] = useState([]);
   const [jsonExpressions, setJsonExpressions] = useState([]);
   const [combinator, setCombinator] = useState('and');
   const [showJsonView, setShowJsonView] = useState(false);
@@ -16,34 +13,33 @@ const ExpressionForm = () => {
     setShowExpressionForm(true);
   };
 
-  const handleDeleteExpression = (index) => {
-    const updatedExpressions = [...expressions];
-    updatedExpressions.splice(index, 1);
-    setExpressions(updatedExpressions);
-  };
-
   const handleCombinatorChange = (e) => {
     setCombinator(e.target.value);
   };
 
   return (
     <div className='d-flex justify-content-between'>
-      <div style={{ width: '60%' }}>
+      <div style={{ width: '65%' }}>
         <button className="btn btn-primary mb-3" onClick={handleAddExpression}>
           Add Expression
         </button>
         {showExpressionForm &&
           <Expression
             jsonExpressions={jsonExpressions}
-            setExpressions={setExpressions}
-            onDelete={handleDeleteExpression}
+            setJsonExpressions={setJsonExpressions}
             setShowJsonView={setShowJsonView}
             setShowExpressionForm={setShowExpressionForm}
+            combinator={combinator}
           />
         }
-        {jsonExpressions.length > 0 && <ExpressionList jsonExpressions={jsonExpressions} setExpressions={setExpressions} />}
+        {jsonExpressions.length > 0 && 
+          <ExpressionList 
+            jsonExpressions={jsonExpressions} 
+            setJsonExpressions={setJsonExpressions} 
+          />
+        }
         <div className="mb-3 mt-3">
-          <label>Combinator:</label>
+          <label className="mb-1 fw-semibold">Combinator</label>
           <select
             className="form-select"
             value={combinator}
@@ -55,8 +51,8 @@ const ExpressionForm = () => {
         </div>
       </div>
 
-      <div style={{ width: '30%' }}>
-        {(showJsonView && jsonExpressions.length > 0) && <JsonView expressions={jsonExpressions} combinator={combinator} />}
+      <div style={{ width: '28%' }}>
+        {(showJsonView && jsonExpressions.length > 0) && <JsonView jsonExpressions={jsonExpressions} combinator={combinator} />}
       </div>
     </div>
   );
